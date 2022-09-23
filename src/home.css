@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  font-size: 10px;
+  font-family: HelveticaNeue;
+}
+@font-face {
+  font-family: HelveticaNeue;
+
+  src: url(./HelveticaNeue.ttc);
+}
+a {
+  text-decoration: none;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8rem;
+  gap: 5rem;
+}
+.home-logo {
+  width: 112px;
+  height: 18px;
+}
+.home-photo {
+  max-width: 100%;
+}
+.button {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 4rem;
+  left: calc(50% - 387px / 2 - 0.5px);
+}
+.button div {
+  padding: 1.8rem 6rem;
+  background: #62a1eb;
+  border-radius: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button div span {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 2.4rem;
+  color: #ffffff;
+  font-variant-caps: all-petite-caps;
+}
