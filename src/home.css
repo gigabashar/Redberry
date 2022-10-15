@@ -23,6 +23,7 @@ a {
   align-items: center;
   padding: 8rem;
   gap: 5rem;
+  height: 100vh;
 }
 .home-logo {
   width: 112px;
@@ -52,4 +53,39 @@ a {
   line-height: 2.4rem;
   color: #ffffff;
   font-variant-caps: all-petite-caps;
+}
+
+.home-photo-mobile {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .home {
+    padding: 2rem;
+  }
+  .button div span {
+    font-size: 2.4rem;
+  }
+  .button div {
+    padding: 1.8rem 4rem;
+  }
+}
+@media screen and (max-width: 550px) {
+  .home {
+    padding: 10rem 2rem 2rem;
+  }
+  .home-photo {
+    display: none;
+  }
+  .home-photo-mobile {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .button {
+    margin-top: auto;
+  }
+  .home {
+    padding: 16rem 2rem 2rem;
+  }
 }

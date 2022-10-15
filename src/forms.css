@@ -530,3 +530,49 @@ input:focus {
   background: #fff1f1;
   border: 2px dashed #e52f2f;
 }
+.game-over {
+  position: relative;
+  min-width: 50%;
+  min-height: 300px;
+  text-align: center;
+  margin: 150px auto;
+  border: 3px solid;
+  border-radius: 5px;
+}
+
+.game-over h2 {
+  margin: 40px 0;
+  font-size: 40px;
+  font-family: "Asap", sans-serif;
+  color: #25272e;
+}
+
+.game-over p {
+  margin-top: 50px;
+  font-size: 30px;
+  text-transform: capitalize;
+  font-family: "Asap", sans-serif;
+  color: #25272e;
+}
+
+.game-over button {
+  width: 70px;
+  height: 30px;
+  margin-top: 60px;
+  border: none;
+  border-radius: 3.5px;
+  background-color: #e25840;
+  text-transform: capitalize;
+  font-family: "Asap", sans-serif;
+  color: white;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.buttonclick {
+  transform: scale(0.95);
+}
+
+dialog::backdrop {
+  background-color: #4a4a4a;
+}

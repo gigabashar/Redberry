@@ -15,6 +15,11 @@ function Home() {
         src={process.env.PUBLIC_URL + `/images/Group1.png`}
         alt="group1"
       />
+      <img
+        className="home-photo-mobile"
+        src={process.env.PUBLIC_URL + `/images/Group.png`}
+        alt="group1"
+      />
       <div className="button">
         <Link to="/forms">
           <div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import FormHeader from "./FormHeader";
 import "./forms.css";
@@ -64,20 +65,78 @@ function Forms() {
   }
 
   const teamStartValue = "თიმი";
-  const teams = ["დეველოპმენტი", "გაყიდვები", "HR", "დიზაინი", "მარკეტინგი"];
+  const teams = [];
   const [team, setTeam] = useState(teamStartValue);
+  React.useEffect(
+    function () {
+      fetch("https://pcfy.redberryinternship.ge/api/teams")
+        .then((response) => response.json())
+        .then((data) => data.data.map((element) => teams.push(element.name)));
+
+      console.log("alalme");
+    },
+    [initialValues]
+  );
 
   const positionStartValue = "პოზიცია";
-  const positions = ["ინტერნი", "HR ბიზნეს დეველოპერი"];
+  const positions = [];
   const [position, setPosition] = useState(positionStartValue);
+  React.useEffect(
+    function () {
+      fetch("https://pcfy.redberryinternship.ge/api/positions")
+        .then((response) => response.json())
+        .then((data) => {
+          return team === "დიზაინი"
+            ? data.data.map((element) => {
+                return element.team_id === 4 && positions.push(element.name);
+              })
+            : team === "დეველოპერი"
+            ? data.data.map((element) => {
+                return element.team_id === 1 && positions.push(element.name);
+              })
+            : team === "მარკეტინგი"
+            ? data.data.map((element) => {
+                return element.team_id === 5 && positions.push(element.name);
+              })
+            : team === "HR"
+            ? data.data.map((element) => {
+                return element.team_id === 2 && positions.push(element.name);
+              })
+            : team === "გაყიდვები"
+            ? data.data.map((element) => {
+                return element.team_id === 3 && positions.push(element.name);
+              })
+            : "";
+        });
+    },
+    [initialValues]
+  );
 
   const laptopBrandStartValue = "ლეპტოპის ბრენდი";
-  const laptopBrands = ["ლენოვო", "ეფლი", "დელი", "სამსუნგი"];
+  const laptopBrands = [];
   const [laptopBrand, setLaptopBrand] = useState(laptopBrandStartValue);
+  React.useEffect(
+    function () {
+      fetch("https://pcfy.redberryinternship.ge/api/brands")
+        .then((response) => response.json())
+        .then((data) =>
+          data.data.map((element) => laptopBrands.push(element.name))
+        );
+    },
+    [initialValues]
+  );
 
   const cpuStartValue = "CPU";
-  const cpuList = ["i3", "i5", "i7", "i9"];
+  const cpuList = [];
   const [cpu, setCpu] = useState(cpuStartValue);
+  React.useEffect(
+    function () {
+      fetch("https://pcfy.redberryinternship.ge/api/cpus")
+        .then((response) => response.json())
+        .then((data) => data.data.map((element) => cpuList.push(element.name)));
+    },
+    [initialValues]
+  );
 
   const [memoryType, setMemoryType] = useState(null);
   const [laptopCondition, setLaptopConditon] = useState(null);
@@ -226,6 +285,12 @@ function Forms() {
     setImageSource(URL.createObjectURL(event.target.files[0]));
     setImageName(event.target.files[0].name);
     setImageSize((event.target.files[0].size / (1024 * 1024)).toFixed(1));
+  }
+
+  const popup = document.getElementById("popup");
+
+  function openPopUp() {
+    Object.keys(validateSecondForm()).length === 0 && popup.showModal();
   }
 
   return (
@@ -668,9 +733,10 @@ function Forms() {
               </span>
               <div>
                 <button
-                  onClick={() => {
+                  onMouseDown={() => {
                     handleSecondFormSubmit();
                   }}
+                  onMouseUp={openPopUp}
                 >
                   დამახსოვრება
                 </button>
@@ -685,6 +751,13 @@ function Forms() {
           alt="bottom-logo"
         />
       </div>
+      {Object.keys(validateSecondForm()).length === 0 && (
+        <dialog class="game-over" id="popup">
+          <h2>You won the game!</h2>
+          <p>congratulations!</p>
+          <button class="continue-button">continue</button>
+        </dialog>
+      )}
     </div>
   );
 }

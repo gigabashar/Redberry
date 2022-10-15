@@ -9,7 +9,12 @@ function Select(props) {
     <div
       className={props.firstForm ? "first-form-select" : "second-form-select"}
     >
-      <div className="active" onClick={() => setOpenedTeam(!openedTeam)}>
+      <div
+        className="active"
+        onClick={() => {
+          setOpenedTeam(!openedTeam);
+        }}
+      >
         {props.value}
 
         <span
