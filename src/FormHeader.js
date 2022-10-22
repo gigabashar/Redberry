@@ -13,15 +13,7 @@ function FormHeader({ firstForm, setFirstForm }) {
           setFirstForm(true);
         }}
       >
-        <IoIosArrowBack
-          style={{
-            position: "absolute",
-            fontSize: "2rem",
-            left: "1.7rem",
-            top: "1.7rem",
-            color: "black",
-          }}
-        />
+        <IoIosArrowBack className="arrow" />
       </div>
       <div className="form-heading">
         <div>
@@ -58,6 +50,35 @@ function FormHeader({ firstForm, setFirstForm }) {
             ></div>
           )}
         </div>
+      </div>
+      <div className="form-heading-mobile">
+        {firstForm && (
+          <div
+            style={{
+              display: "flex",
+              flexDirtection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h1>თანამშრომლის ინფო</h1>
+            <p style={{}}>1/2</p>
+          </div>
+        )}
+
+        {!firstForm && (
+          <div
+            style={{
+              display: "flex",
+              flexDirtection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h1> ლეპტოპის მახასიათებლები</h1>
+            <p style={{}}>2/2</p>
+          </div>
+        )}
       </div>
     </>
   );

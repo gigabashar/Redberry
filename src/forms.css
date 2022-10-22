@@ -33,7 +33,7 @@ a {
 .form-heading {
   display: flex;
   justify-content: center;
-  align-items: center;
+
   gap: 4rem;
   padding-top: 6rem;
 }
@@ -49,7 +49,7 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr repeat(2, 1fr) repeat(3, 1fr);
-  padding: 2rem 16rem 2rem 16rem;
+  padding: 2rem 13rem;
   max-width: 120rem;
   margin: 4rem auto;
   column-gap: 2rem;
@@ -117,8 +117,6 @@ a {
 .select {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 0;
 }
 .select select {
   background: #ebebeb;
@@ -265,7 +263,7 @@ input:focus {
 }
 
 .second-form {
-  padding: 2rem 16rem 2rem 16rem;
+  padding: 2rem 16rem;
   max-width: 120rem;
   margin: 4rem auto;
 }
@@ -530,43 +528,52 @@ input:focus {
   background: #fff1f1;
   border: 2px dashed #e52f2f;
 }
+
 .game-over {
-  position: relative;
   min-width: 50%;
   min-height: 300px;
   text-align: center;
-  margin: 150px auto;
-  border: 3px solid;
   border-radius: 5px;
+  border: none;
+  margin: auto;
 }
 
 .game-over h2 {
-  margin: 40px 0;
-  font-size: 40px;
-  font-family: "Asap", sans-serif;
-  color: #25272e;
+  font-family: HelveticaNeue;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 31px;
+  text-align: center;
+  color: #292929;
 }
 
-.game-over p {
-  margin-top: 50px;
-  font-size: 30px;
-  text-transform: capitalize;
-  font-family: "Asap", sans-serif;
-  color: #25272e;
-}
-
-.game-over button {
-  width: 70px;
-  height: 30px;
-  margin-top: 60px;
-  border: none;
-  border-radius: 3.5px;
-  background-color: #e25840;
-  text-transform: capitalize;
-  font-family: "Asap", sans-serif;
-  color: white;
-  letter-spacing: 0.3px;
+.game-over div {
   cursor: pointer;
+  font-family: HelveticaNeue;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
+  padding: 1.8rem 6rem;
+  background: #62a1eb;
+  border-radius: 8px;
+  margin: auto;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  max-width: 29rem;
+}
+.game-over span {
+  font-family: HelveticaNeue;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #0089a7;
+  margin-bottom: 4rem;
+  position: relative;
+  bottom: 2rem;
 }
 
 .buttonclick {
@@ -575,4 +582,103 @@ input:focus {
 
 dialog::backdrop {
   background-color: #4a4a4a;
+}
+.form-heading-mobile {
+  display: none;
+}
+.arrow {
+  position: absolute;
+  font-size: 2rem;
+  left: 1.7rem;
+  top: 1.7rem;
+  color: #797979;
+}
+
+@media screen and (max-width: 1024px) {
+  .first-form,
+  .second-form {
+    padding: 2rem 4rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .first-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .button-goBack {
+    height: 0;
+    left: 20px;
+  }
+  .grid-item-3 {
+    padding: 0;
+  }
+  .select {
+    height: fit-content;
+  }
+  .first-form-select {
+    height: fit-content;
+  }
+  .form-heading {
+    padding-top: 5.5rem;
+  }
+  .bottom-logo {
+    display: none;
+  }
+  .form-heading {
+    display: none;
+  }
+  .form-heading-mobile {
+    padding-top: 5.5rem;
+    display: block;
+  }
+  .form-heading-mobile div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .form-heading-mobile p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #898989;
+  }
+  .second-form-div1 {
+    grid-template-columns: 1fr;
+    padding: 6rem 0rem 3rem;
+  }
+  .second-form-div2 {
+    grid-template-columns: 1fr;
+    padding: 0rem;
+  }
+  .second-form-div3 {
+    grid-template-columns: 1fr;
+    padding: 3rem 0rem 3rem;
+  }
+  .second-form-div4 {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding: 0rem;
+    padding-bottom: 3rem;
+  }
+  .second-form hr {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .first-form,
+  .second-form {
+    padding: 2rem 1rem;
+  }
+  .arrow {
+    font-size: 3rem !important;
+    left: -1.3rem;
+  }
+  .form-heading-mobile {
+    padding-top: 5.8rem;
+  }
 }

@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import FormHeader from "./FormHeader";
 import "./forms.css";
 import Select from "./Select";
+import { Link } from "react-router-dom";
 
 const GeorgianAlphabet = [
   "ა",
@@ -46,14 +46,19 @@ function Forms() {
   const initialValues = {
     name: "",
     surname: "",
+    teamid: "",
+    positionid: "",
+    token: "dc139b651341bb25b428de9849696fe2",
     email: "",
     phoneNumber: "",
     laptopName: "",
+    laptopbrandId: "",
     cpuCore: "",
     cpuThread: "",
     laptopRAM: "",
     date: "",
     price: "",
+    imageSource: "",
   };
 
   const [formValues, setFormValues] = React.useState(initialValues);
@@ -65,18 +70,21 @@ function Forms() {
   }
 
   const teamStartValue = "თიმი";
-  const teams = [];
+  const [teams, setTeams] = useState([]);
   const [team, setTeam] = useState(teamStartValue);
-  React.useEffect(
-    function () {
-      fetch("https://pcfy.redberryinternship.ge/api/teams")
-        .then((response) => response.json())
-        .then((data) => data.data.map((element) => teams.push(element.name)));
 
-      console.log("alalme");
-    },
-    [initialValues]
-  );
+  React.useEffect(function () {
+    fetch("https://pcfy.redberryinternship.ge/api/teams")
+      .then((response) => response.json())
+      .then((data) => {
+        const tempTeams = [];
+        data.data.map((element) => {
+          return tempTeams.push(element.name);
+        });
+
+        setTeams(tempTeams);
+      });
+  }, []);
 
   const positionStartValue = "პოზიცია";
   const positions = [];
@@ -109,33 +117,41 @@ function Forms() {
             : "";
         });
     },
-    [initialValues]
+    [team]
   );
 
   const laptopBrandStartValue = "ლეპტოპის ბრენდი";
-  const laptopBrands = [];
+  const [laptopBrands, setLeptopBrands] = useState([]);
   const [laptopBrand, setLaptopBrand] = useState(laptopBrandStartValue);
+
   React.useEffect(
     function () {
       fetch("https://pcfy.redberryinternship.ge/api/brands")
         .then((response) => response.json())
-        .then((data) =>
-          data.data.map((element) => laptopBrands.push(element.name))
-        );
+        .then((data) => {
+          const tempLaptops = [];
+          data.data.map((element) => tempLaptops.push(element.name));
+          setLeptopBrands(tempLaptops);
+        });
     },
-    [initialValues]
+    [firstForm]
   );
 
   const cpuStartValue = "CPU";
-  const cpuList = [];
+  const [cpuList, setCpuList] = useState([]);
   const [cpu, setCpu] = useState(cpuStartValue);
+
   React.useEffect(
     function () {
       fetch("https://pcfy.redberryinternship.ge/api/cpus")
         .then((response) => response.json())
-        .then((data) => data.data.map((element) => cpuList.push(element.name)));
+        .then((data) => {
+          const tempCpu = [];
+          data.data.map((element) => tempCpu.push(element.name));
+          setCpuList(tempCpu);
+        });
     },
-    [initialValues]
+    [firstForm]
   );
 
   const [memoryType, setMemoryType] = useState(null);
@@ -260,7 +276,7 @@ function Forms() {
     if (laptopCondition === null) {
       errors.laptopCondition = "blank";
     }
-    if (!imageSource) {
+    if (!formValues.imageSource) {
       errors.uploadedImage = "blank";
     }
 
@@ -269,34 +285,47 @@ function Forms() {
 
   async function handleFirstFormSubmit() {
     setFirstformErrors(validateFirstForm());
-    Object.keys(validateFirstForm()).length === 6 && setFirstForm(false);
+    Object.keys(validateFirstForm()).length === 0 && setFirstForm(false);
   }
   function handleSecondFormSubmit() {
     setSecondFormErrors(validateSecondForm());
   }
   function handleSubmit(event) {
     event.preventDefault();
+    fetch("https://pcfy.redberryinternship.ge/api", {
+      method: "POST",
+      headers: { "Content-Type": "aplication/json" },
+      body: JSON.stringify(formValues),
+    }).then(() => {
+      console.log("submitted");
+    });
   }
 
-  const [imageSource, setImageSource] = useState("");
   const [imageName, setImageName] = useState("");
   const [imageSize, setImageSize] = useState("");
   function loadFile(event) {
-    setImageSource(URL.createObjectURL(event.target.files[0]));
+    formValues.imageSource = URL.createObjectURL(event.target.files[0]);
     setImageName(event.target.files[0].name);
     setImageSize((event.target.files[0].size / (1024 * 1024)).toFixed(1));
   }
 
   const popup = document.getElementById("popup");
+  const form = document.getElementById("form");
 
   function openPopUp() {
-    Object.keys(validateSecondForm()).length === 0 && popup.showModal();
+    if (
+      Object.keys(validateFirstForm()).length === 0 &&
+      Object.keys(validateSecondForm()).length === 0
+    ) {
+      popup.showModal();
+      form.style["display"] = "none";
+    }
   }
 
   return (
     <div>
       <FormHeader firstForm={firstForm} setFirstForm={(e) => setFirstForm(e)} />
-      <form autoComplete="off" onSubmit={handleSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit} id="form">
         {firstForm && (
           <div className="first-form">
             <div
@@ -341,6 +370,7 @@ function Forms() {
                   : "მინიმუმ 2 სიმბოლო ქართული ასოები"}
               </span>
             </div>
+
             <div
               className={`select grid-item-3 ${
                 firstFormErrors.team && "select-error"
@@ -413,14 +443,14 @@ function Forms() {
             <div
               className={`photo-upload ${
                 secondFormErrors.uploadedImage && "not-uploaded"
-              } ${imageSource && "uploaded-image"}`}
+              } ${formValues.imageSource && "uploaded-image"}`}
             >
-              {!imageSource ? (
+              {!formValues.imageSource ? (
                 <>
                   {secondFormErrors.uploadedImage && (
                     <img
                       src={process.env.PUBLIC_URL + `/images/Vector.png`}
-                      alt="sheni"
+                      alt="vector"
                     />
                   )}
                   <div>
@@ -447,13 +477,13 @@ function Forms() {
                       height: "100%",
                       borderRadius: "8px",
                     }}
-                    src={process.env.PUBLIC_URL + imageSource}
+                    src={process.env.PUBLIC_URL + formValues.imageSource}
                     alt="uploaded file"
                   />
                 </>
               )}
             </div>
-            {imageSource && (
+            {formValues.imageSource && (
               <div className="uploaded-img">
                 <div className="uploaded-image-info">
                   <div className="uploaded-image-info-img">
@@ -751,13 +781,18 @@ function Forms() {
           alt="bottom-logo"
         />
       </div>
-      {Object.keys(validateSecondForm()).length === 0 && (
-        <dialog class="game-over" id="popup">
-          <h2>You won the game!</h2>
-          <p>congratulations!</p>
-          <button class="continue-button">continue</button>
-        </dialog>
-      )}
+      <dialog id="popup" className="game-over">
+        <img
+          style={{}}
+          src={process.env.PUBLIC_URL + `/images/Frame.svg`}
+          alt="uploaded file"
+        />
+        <h2>ჩანაწერი დამატებულია!</h2>
+        <div>სიაში გადაყვანა</div>
+        <Link to="/">
+          <span>მთავარი</span>
+        </Link>
+      </dialog>
     </div>
   );
 }
