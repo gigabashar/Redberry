@@ -668,6 +668,15 @@ dialog::backdrop {
   .second-form hr {
     display: none;
   }
+
+  .game-over {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 @media screen and (max-width: 425px) {
   .first-form,
